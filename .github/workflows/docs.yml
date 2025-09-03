@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: |
           uv venv
-          uv pip install mkdocs-material
+          uv pip install mkdocs-material mkdocs-git-revision-date-localized-plugin
 
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
