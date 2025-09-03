@@ -1,8 +1,8 @@
 site_name: Work Journal
 site_description: A simple tool to track your work accomplishments using AI-powered entry processing
-site_url: https://dsilbergleithcu.github.io/work-journal/
-repo_url: https://github.com/dsilbergleithcu/work-journal
-repo_name: dsilbergleithcu/work-journal
+site_url: https://ds17f.github.io/work-journal/
+repo_url: https://github.com/ds17f/work-journal
+repo_name: ds17f/work-journal
 
 theme:
   name: material
