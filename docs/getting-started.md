@@ -6,7 +6,7 @@ Get Work Journal up and running in minutes.
 
 ```bash
 # Clone the repository
-git clone https://github.com/dsilbergleithcu/work-journal.git
+git clone https://github.com/ds17f/work-journal.git
 cd work-journal
 
 # Setup with uv (recommended)

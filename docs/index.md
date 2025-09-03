@@ -25,7 +25,7 @@ Work Journal captures your daily work and transforms it into well-structured doc
 
 ## Quick Start
 
-1. **Clone**: `git clone https://github.com/dsilbergleithcu/work-journal.git`
+1. **Clone**: `git clone https://github.com/ds17f/work-journal.git`
 2. **Setup**: `cd work-journal && uv sync`
 3. **Run**: `make run` (or `uv run python -m work_journal.cli`)
 4. **Setup**: Follow the guided onboarding to configure your AI provider

@@ -12,7 +12,7 @@ uv add work-journal
 work-journal
 ```
 
-The application will guide you through setup on first run. For detailed usage instructions, see the **[User Guide](https://dsilbergleithcu.github.io/work-journal/)**.
+The application will guide you through setup on first run. For detailed usage instructions, see the **[User Guide](https://ds17f.github.io/work-journal/)**.
 
 ## 🛠️ Developer Setup
 
@@ -24,7 +24,7 @@ The application will guide you through setup on first run. For detailed usage in
 
 ```bash
 # Clone and setup
-git clone https://github.com/dsilbergleithcu/work-journal.git
+git clone https://github.com/ds17f/work-journal.git
 cd work-journal
 uv sync
 
@@ -92,8 +92,8 @@ MIT License - see [LICENSE](LICENSE) file.
 
 ## 🆘 Support
 
-- **Documentation**: [User Guide](https://dsilbergleithcu.github.io/work-journal/)
-- **Issues**: [GitHub Issues](https://github.com/dsilbergleithcu/work-journal/issues)
+- **Documentation**: [User Guide](https://ds17f.github.io/work-journal/)
+- **Issues**: [GitHub Issues](https://github.com/ds17f/work-journal/issues)
 
 ---
 
