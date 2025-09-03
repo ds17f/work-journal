@@ -76,6 +76,10 @@ Please refine the entry based on this feedback. Respond ONLY with valid JSON in 
             # Use processing workflow for refinement
             response = self.llm_client.call_llm("processing", messages, max_tokens=1000, temperature=0.3)
             
+            # Debug: Check if response is empty or invalid
+            if not response or not response.strip():
+                raise Exception(f"LLM returned empty response")
+            
             # Parse JSON response
             refined_data = json.loads(response)
             
@@ -98,7 +102,9 @@ Please refine the entry based on this feedback. Respond ONLY with valid JSON in 
             return entry
             
         except json.JSONDecodeError as e:
-            raise Exception(f"Failed to parse LLM response as JSON: {e}")
+            # Show the actual response content for debugging
+            response_preview = response[:200] if response else "None"
+            raise Exception(f"Failed to parse LLM response as JSON: {e}. Response was: {response_preview}")
         except Exception as e:
             raise Exception(f"Failed to refine entry: {e}")
     
@@ -189,6 +195,10 @@ Respond ONLY with valid JSON in this exact format:
         try:
             # Use processing workflow for this step
             response = self.llm_client.call_llm("processing", messages, max_tokens=1000, temperature=0.3)
+            
+            # Debug: Check if response is empty or invalid
+            if not response or not response.strip():
+                raise Exception(f"LLM returned empty response")
             
             # Parse JSON response
             structured_data = json.loads(response)
