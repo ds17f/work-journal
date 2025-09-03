@@ -1,0 +1,49 @@
+site_name: Work Journal
+site_description: A simple tool to track your work accomplishments using AI-powered entry processing
+site_url: https://dsilbergleithcu.github.io/work-journal/
+repo_url: https://github.com/dsilbergleithcu/work-journal
+repo_name: dsilbergleithcu/work-journal
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation & Setup: getting-started.md
+    - Provider Configuration: providers.md
+    - Configuration Management: configurations.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - git-revision-date-localized

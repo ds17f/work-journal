@@ -1,0 +1,18 @@
+[project]
+name = "work-journal"
+version = "0.1.0"
+description = "A CLI tool for tracking work accomplishments"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "litellm>=1.76.0",
+    "prompt-toolkit>=3.0.52",
+    "pydantic>=2.11.7",
+    "python-dotenv>=1.1.1",
+    "requests>=2.31.0",
+    "rich>=14.1.0",
+    "typer>=0.16.1",
+]
+
+[project.scripts]
+work-journal = "work_journal.cli:main"

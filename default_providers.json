@@ -1,0 +1,39 @@
+{
+  "description": "Default provider templates for Work Journal. Users can edit this file or use the UI to customize providers.",
+  "providers": {
+    "ollama_local": {
+      "protocol": "ollama",
+      "service_name": "Ollama (Local)",
+      "api_base": "http://localhost:11434/v1",
+      "description": "Local Ollama server - free, private, runs on your computer"
+    },
+    "lmstudio_local": {
+      "protocol": "openai_compatible",
+      "service_name": "LM Studio (Local)",
+      "api_base": "http://localhost:1234/v1", 
+      "api_key": "lm-studio",
+      "description": "LM Studio local server - free, private, runs on your computer"
+    },
+    "openai_cloud": {
+      "protocol": "openai_compatible",
+      "service_name": "OpenAI (Cloud)",
+      "api_base": "https://api.openai.com/v1",
+      "auth_env": "OPENAI_API_KEY",
+      "description": "OpenAI GPT models - paid service, requires API key"
+    },
+    "anthropic_cloud": {
+      "protocol": "anthropic",
+      "service_name": "Anthropic (Cloud)",
+      "api_base": "https://api.anthropic.com",
+      "auth_env": "ANTHROPIC_API_KEY", 
+      "description": "Anthropic Claude models - paid service, requires API key"
+    },
+    "gocode_enterprise": {
+      "protocol": "openai_compatible",
+      "service_name": "GoCode (Enterprise)",
+      "api_base": "https://caas-gocode-prod.caas-prod.prod.onkatana.net/v1",
+      "auth_env": "GOCODE_AUTH_TOKEN",
+      "description": "Internal GoCode service - enterprise only"
+    }
+  }
+}
