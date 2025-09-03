@@ -5,6 +5,9 @@ from typing import Dict, Any, Optional
 import litellm
 from dotenv import load_dotenv
 
+# Configure litellm to drop unsupported parameters for models like GPT-5
+litellm.drop_params = True
+
 from .models import Settings, Provider, ModelAssignment
 from .storage import Storage
 
