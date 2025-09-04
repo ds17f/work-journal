@@ -11,6 +11,9 @@ from .llm import LLMClient
 from .storage import Storage
 from .date_parser import DateParser
 from .entry_processor import EntryProcessor
+from .logging_config import get_logger
+
+logger = get_logger(__name__)
 
 console = Console()
 app = typer.Typer(help="A CLI tool for tracking work accomplishments.")

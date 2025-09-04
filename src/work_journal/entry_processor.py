@@ -8,6 +8,9 @@ from datetime import datetime
 from .models import JournalEntry, ProcessedEntry, Impact
 from .llm import LLMClient
 from .entity_registry import EntityMatch
+from .logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 class EntryProcessor:
@@ -74,10 +77,20 @@ Please refine the entry based on this feedback. Respond ONLY with valid JSON in 
         
         try:
             # Use processing workflow for refinement
+            logger.debug(f"Calling LLM for refinement with {len(messages)} messages")
+            logger.debug(f"System prompt length: {len(messages[0]['content']) if messages else 0}")
+            logger.debug(f"User prompt length: {len(messages[1]['content']) if len(messages) > 1 else 0}")
+            
             response = self.llm_client.call_llm("processing", messages, max_tokens=1000, temperature=0.3)
             
             # Debug: Check if response is empty or invalid
+            logger.debug(f"LLM response type: {type(response)}")
+            logger.debug(f"LLM response length: {len(response) if response else 0}")
+            if response:
+                logger.debug(f"LLM response preview: {response[:100]}...")
+            
             if not response or not response.strip():
+                logger.error("LLM returned empty response for refinement")
                 raise Exception(f"LLM returned empty response")
             
             # Parse JSON response
@@ -104,8 +117,11 @@ Please refine the entry based on this feedback. Respond ONLY with valid JSON in 
         except json.JSONDecodeError as e:
             # Show the actual response content for debugging
             response_preview = response[:200] if response else "None"
+            logger.error(f"Failed to parse LLM response as JSON: {e}")
+            logger.error(f"Raw response was: {response_preview}")
             raise Exception(f"Failed to parse LLM response as JSON: {e}. Response was: {response_preview}")
         except Exception as e:
+            logger.error(f"Failed to refine entry: {e}")
             raise Exception(f"Failed to refine entry: {e}")
     
     def _extract_structure(self, raw_input: str) -> ProcessedEntry:
@@ -194,10 +210,13 @@ Respond ONLY with valid JSON in this exact format:
         
         try:
             # Use processing workflow for this step
+            logger.debug(f"Calling LLM for entry extraction with {len(messages)} messages")
             response = self.llm_client.call_llm("processing", messages, max_tokens=1000, temperature=0.3)
             
             # Debug: Check if response is empty or invalid
+            logger.debug(f"LLM extraction response length: {len(response) if response else 0}")
             if not response or not response.strip():
+                logger.error("LLM returned empty response for entry extraction")
                 raise Exception(f"LLM returned empty response")
             
             # Parse JSON response
@@ -227,7 +246,7 @@ Respond ONLY with valid JSON in this exact format:
             return self._create_fallback_entry(raw_input)
         except Exception as e:
             # Fallback if LLM call fails
-            print(f"LLM processing failed: {e}")
+            logger.warning(f"LLM processing failed, using fallback: {e}")
             return self._create_fallback_entry(raw_input)
     
     def _build_entity_suggestions(self, potential_entities: Dict, matched_entities: Dict) -> str:

@@ -47,6 +47,29 @@ export ANTHROPIC_API_KEY="your-api-key-here"
 
 You can also create a `.env` file in the project directory or use `~/.work-journal/.env` for system-wide configuration.
 
+### Logging Configuration
+
+Control logging behavior with environment variables:
+
+```bash
+# Set logging level (DEBUG, INFO, WARNING, ERROR)
+export WORK_JOURNAL_LOG_LEVEL=DEBUG
+
+# Suppress console logging (useful for TUI)
+export WORK_JOURNAL_SUPPRESS_CONSOLE_LOG=true
+
+# Run with debug logging to troubleshoot LLM issues
+WORK_JOURNAL_LOG_LEVEL=DEBUG make run
+```
+
+**Log File Location**: `./work-journal.log` in your current working directory
+
+**Log Features**:
+- Automatic log rotation (10MB max, 5 backup files)
+- Debug information for LLM calls and responses
+- Error tracking with detailed context
+- LiteLLM API request/response logging at DEBUG level
+
 ## File Storage
 
 Work Journal stores all data locally in `~/.work-journal/`:
@@ -76,3 +99,28 @@ Work Journal includes comprehensive **online help** throughout the application:
 - All major features have detailed guidance and examples
 
 The application is designed to be self-explanatory with its built-in help system!
+
+## Troubleshooting
+
+### LLM Issues
+
+If you're experiencing problems with AI responses (empty responses, errors, timeouts):
+
+1. **Enable debug logging** to see detailed API information:
+   ```bash
+   WORK_JOURNAL_LOG_LEVEL=DEBUG make run
+   ```
+
+2. **Check the log file** (`./work-journal.log`) for detailed error information
+
+3. **Try a different model** - some models may have availability issues:
+   - GPT-4 is generally more stable than GPT-5
+   - Local models (Ollama) work offline but may be slower
+
+4. **Verify API keys** and provider configurations in the settings
+
+### Performance Tips
+
+- Use `WORK_JOURNAL_SUPPRESS_CONSOLE_LOG=true` in production to reduce terminal output
+- Log files automatically rotate to prevent disk space issues
+- Debug logging creates verbose logs - use INFO level for normal operation

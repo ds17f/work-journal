@@ -12,6 +12,10 @@ from pathlib import Path
 from typing import List, Optional
 from contextlib import contextmanager
 
+from .logging_config import get_logger
+
+logger = get_logger(__name__)
+
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text

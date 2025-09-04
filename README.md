@@ -74,8 +74,19 @@ uv run mkdocs gh-deploy
 - **Storage**: Local JSON files with soft delete and backup support
 - **LLM Integration**: Multi-provider support (OpenAI, Anthropic, local models)
 - **Processing**: AI-powered entry structuring and impact assessment
+- **Logging**: Comprehensive debug logging with automatic rotation
 
 All data stays local. No telemetry. API keys via environment variables only.
+
+### Debug & Troubleshooting
+
+```bash
+# Enable detailed logging for LLM debugging
+WORK_JOURNAL_LOG_LEVEL=DEBUG make run
+
+# Check logs (automatically created in working directory)
+tail -f work-journal.log
+```
 
 ## 🤝 Contributing
 

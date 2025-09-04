@@ -8,8 +8,16 @@ from dotenv import load_dotenv
 # Configure litellm to drop unsupported parameters for models like GPT-5
 litellm.drop_params = True
 
+# Enable debug logging for litellm
+import os
+if os.getenv("WORK_JOURNAL_LOG_LEVEL", "INFO").upper() == "DEBUG":
+    litellm.set_verbose = True
+
 from .models import Settings, Provider, ModelAssignment
 from .storage import Storage
+from .logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 class LLMClient:
@@ -92,14 +100,19 @@ class LLMClient:
     
     def call_llm(self, need: str, messages: list, **kwargs) -> str:
         """Make an LLM call for a specific need (conversation, processing, jira_matching)."""
+        logger.debug(f"Starting LLM call for need: {need}")
+        
         # Check if we have a current configuration
         if not self.settings.current_config:
+            logger.error("No configuration is currently active")
             raise ValueError("No configuration is currently active")
             
         if self.settings.current_config not in self.settings.configurations:
+            logger.error(f"Current configuration '{self.settings.current_config}' not found")
             raise ValueError(f"Current configuration '{self.settings.current_config}' not found")
             
         config = self.settings.configurations[self.settings.current_config]
+        logger.debug(f"Using configuration: {self.settings.current_config}")
         
         # Get the model assignment for this need
         if need == "conversation":
@@ -117,6 +130,8 @@ class LLMClient:
             
             # Format model name for LiteLLM
             model_name = self._format_model_name(assignment.provider, assignment.model)
+            logger.debug(f"Making LLM call to model: {model_name}")
+            logger.debug(f"Message count: {len(messages)}, kwargs: {list(kwargs.keys())}")
             
             # Make the call
             response = litellm.completion(
@@ -126,9 +141,13 @@ class LLMClient:
                 **kwargs
             )
             
-            return response.choices[0].message.content
+            content = response.choices[0].message.content
+            logger.debug(f"LLM response received, length: {len(content) if content else 0}")
+            
+            return content
             
         except Exception as e:
+            logger.error(f"LLM call failed for {need}: {e}")
             raise Exception(f"LLM call failed for {need}: {e}")
     
     def get_available_models(self, provider_name: str) -> list:
@@ -175,7 +194,7 @@ class LLMClient:
                 return []
                     
         except Exception as e:
-            print(f"Error getting models for {provider_name}: {e}")
+            logger.warning(f"Error getting models for {provider_name}: {e}")
             return []
     
     def test_provider(self, provider_name: str, model: str = None) -> tuple[bool, str]:
@@ -209,5 +228,5 @@ class LLMClient:
             
         except Exception as e:
             error_msg = str(e)
-            print(f"Provider test failed: {error_msg}")
+            logger.error(f"Provider test failed for {provider_name}: {error_msg}")
             return False, error_msg

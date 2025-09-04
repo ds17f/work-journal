@@ -58,3 +58,7 @@ exports/
 .pytest_cache/
 .coverage
 htmlcov/site/
+
+# Log files
+work-journal.log*
+*.log
